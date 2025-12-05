@@ -1,7 +1,6 @@
 import { useState } from "react";
 import AddQuest from "./AddQuest";
 import QuestsList from "./QuestList";
-import status from "daisyui/components/status";
 
 function App() {
   const localQuests = JSON.parse(window.localStorage.getItem("quests")) || [];
@@ -15,16 +14,15 @@ function App() {
   );
 
   function saveDeleteQuest(quest) {
-  let auxQuests = quests;
+    let auxQuests = quests;
 
-  const filterAuxQuests = auxQuests.filter(
-    (auxQuest) => auxQuest.id !== quest.id
-  );
+    const filterAuxQuests = auxQuests.filter(
+      (auxQuest) => auxQuest.id !== quest.id
+    );
 
-  localStorage.setItem("quests", JSON.stringify(filterAuxQuests));
-  getQuests();
-}
-
+    localStorage.setItem("quests", JSON.stringify(filterAuxQuests));
+    getQuests();
+  }
 
   function saveEditQuest(quest, title) {
     let auxQuests = quests;
@@ -89,13 +87,6 @@ function App() {
     setQuests(JSON.parse(window.localStorage.getItem("quests")));
   }
   
-  <QuestsList
-  quests={notConcludedQuests}
-  saveEditQuest={saveEditQuest}
-  saveConcludedQuest={saveConcludedQuest}
-  saveDeleteQuest={saveDeleteQuest}
-/>
-
   return (
     <div className="flex h-screen justify-center items-center">
       <div className="card w-[80%] lg:w-[50%] h-[70%] shadow-md rounded-sm transform ease-out duration-300 items-center p-10 gap-5">
@@ -107,18 +98,20 @@ function App() {
         <div className="flex flex-col gap-4 w-full items-center">
           <h2>Abertas</h2>
           <QuestsList 
-            quests={quests}
+            quests={notConcludedQuests}
             saveEditQuest={saveEditQuest}
             saveConcludedQuest={saveConcludedQuest}
-          />
+            saveDeleteQuest={saveDeleteQuest}
+            />
         </div>
 
         <div className="flex flex-col gap-4 w-full items-center">
           <h2>Concluídas</h2>
           <QuestsList 
-            quests={quests}
+            quests={concludedQuests}
             saveEditQuest={saveEditQuest}
             saveConcludedQuest={saveConcludedQuest}
+            saveDeleteQuest={saveDeleteQuest}
           />
         </div>
       </div>
